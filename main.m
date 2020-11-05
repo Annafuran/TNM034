@@ -16,9 +16,34 @@
 %
 %im: Image of unknown face, RGB-image in uint8 format in the range [0, 255]
 %
-%id: The identity number (integer) of the indetified person, i.e. `1´,
-%`2´,..., `16´ for the persons belonging to `db1´and `0´for all other
+%id: The identity number (integer) of the indetified person, i.e. `1ï¿½,
+%`2ï¿½,..., `16ï¿½ for the persons belonging to `db1ï¿½and `0ï¿½for all other
 %faces. 
 %
 %Your program code. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+function id = tnm034(im)
+    I = imread(im);
+    orig = I;
+    
+    %Gray world algorithm
+    [cols, rows, channels] = size(I);
+    Ravg = sum(sum(I(:, :, 1)))/(cols*rows);
+    Gavg = sum(sum(I(:, :, 2)))/(cols*rows);
+    Bavg = sum(sum(I(:, :, 3)))/(cols*rows);
+    
+    alpha = Gavg/Ravg;
+    beta = Gavg/Bavg;
+    
+    I(:, :, 1) = alpha*I(:, :, 1);
+    I(:, :, 3) = beta*I(:, :, 3);
+    figure;
+    subplot(1,2,1);
+    imshow(orig);
+    subplot(1,2,2);
+    imshow(I);
+end
+
+
