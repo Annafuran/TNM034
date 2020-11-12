@@ -33,8 +33,8 @@ refImg = imread('db0_1.jpg');
 refImg = im2uint8(refImg);
 
 %Lightning Compensation
-%refImg = GrayWorld('db0_1.jpg');
-
+%refImg = GrayWorld(refImg);
+refImg = WhitePatch(refImg);
 refImg = EyeDetection(refImg);
 
 imshow(refImg);
