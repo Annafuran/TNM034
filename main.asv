@@ -32,10 +32,14 @@ clc
 refImg = imread('db0_1.jpg');
 refImg = im2uint8(refImg);
 
+efImg = SkinColorDetection(refImg);
 %Lightning Compensation
 %refImg = GrayWorld('db0_1.jpg');
 
 refImg = EyeDetection(refImg);
+
+%Color space transformation + Skin color detection
+
 
 imshow(refImg);
 

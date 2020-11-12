@@ -1,0 +1,24 @@
+function [EyeDetectedImg] = EyeDetection(inputImg)
+
+YCbCr_img = rgb2ycbcr(inputImg);
+Y = double((YCbCr_img(:,:,1)));
+Cb = double((YCbCr_img(:,:,2)));
+Cr = double((YCbCr_img(:,:,3)));
+
+CrNegative = 255-(Cr.^2);
+
+Cb_Norm = (Cb.^2)/255; 
+Cr_Norm = (CrNegative)/255;
+CbCr =  (Cb./Cr)/255;
+
+EyeMapC = (CbCr + Cr_Norm + Cb_Norm)/3;
+
+se = strel('disk', 8);
+
+EyeMapL = imdilate(Y, se) ./ (imerode(Y, se) + 1);
+
+EyeDetectedImg = EyeMapC.*EyeMapL;
+
+%imshow(EyeDetectedImg);
+
+end

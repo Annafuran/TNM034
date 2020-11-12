@@ -1,6 +1,6 @@
 function [I] = GrayWorld(im)
-    I = imread(im);
-    orig = I;
+    %I = imread(im);
+    I = im;
     
     %Gray world algorithm
     [cols, rows, channels] = size(I);
