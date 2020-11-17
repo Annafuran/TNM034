@@ -35,7 +35,8 @@ refImg = im2uint8(refImg);
 %Lightning Compensation
 %refImg = GrayWorld(refImg);
 refImg = WhitePatch(refImg);
-refImg = EyeDetection(refImg);
+%refImg = EyeDetection(refImg);
+refImg = MouthDetection(refImg);
 
 imshow(refImg);
 
