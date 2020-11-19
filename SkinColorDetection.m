@@ -18,4 +18,9 @@ for n=1:size(row,1)
     binaryImg(row(n), column(n)) = 1;
 end
 
+se = strel('disk',12);
+
+binaryImg = imopen(binaryImg, se);
+binaryImg = imclose(binaryImg, se);
+
 end
