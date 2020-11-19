@@ -19,11 +19,13 @@ eta = 0.95 * (num/den);
 % Create mouth map
 mouthMap = Cr_2 .* ((Cr_2 - ((eta .* Cr_Cb)).^2));
 
+mouthMap = histeq(mouthMap);
+
 %Normalizing
 mouthMap = (mouthMap./max(mouthMap(:)));
 
 %Dialiting resulting mouth map
-se_2 = strel('disk', 15);
+se_2 = strel('disk', 1);
 mouthMap = imdilate(mouthMap, se_2);
 
 
