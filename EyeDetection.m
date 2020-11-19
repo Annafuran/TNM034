@@ -12,14 +12,16 @@ CbCr =(Cb./Cr);
 %Adding the normalized values 
 EyeMapC = (CbCr + CrNegative + Cb)/3;
 
-se_1 = strel('disk', 5);
+EyeMapC = histeq(EyeMapC);
+
+se_1 = strel('Disk', 1);
 EyeMapL = imdilate(Y, se_1) ./ (imerode(Y, se_1) + 1);
 
 %Combinding the eyemaps
 EyeDetectedImg = EyeMapC.*EyeMapL;
 
 %Dialiting resulting eyemaps
-se_2 = strel('disk', 10);
+se_2 = strel(10);
 EyeDetectedImg = imdilate(EyeDetectedImg, se_2);
 
 %Normalizing
