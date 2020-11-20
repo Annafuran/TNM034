@@ -29,7 +29,7 @@ clear
 clc
 
 %Flyttade ut bilden f�r fick den inte att l�sa fr�n mappen (?!)
-refImg = imread('DB1/DB1/db1_08.jpg');
+refImg = imread('DB1/DB1/db1_02.jpg');
 refImg = im2uint8(refImg);
 
 %Lightning Compensation
@@ -42,9 +42,14 @@ FaceMask = SkinColorDetection(refImg);
 
 mask = EyeMask.*FaceMask;
 
-%Crop the image according to the position of the eyes
+%Localize the position of the mouth
+localizeMouthMask = MouthMask.*FaceMask;
+thresholdedMouth = imbinarize(localizeMouthMask, 0.5);
+[y,x] = find(thresholdedMouth);
+ymeanMouth = round(mean(y));
 
-thresholded = imbinarize(mask,0.6);
+%Crop the image according to the position of the eyes
+thresholded = imbinarize(mask(1 : (ymeanMouth-35), :),0.6);
 
 n1 = thresholded(:, 1 : round(end/2));
 n2 = thresholded(:, round(end/2+1) : end );
@@ -58,15 +63,11 @@ xmeanN2 = mean(x);
 ymeanN2 = mean(y);
 
 EyeXAvg = (xmeanN1 + (width(n1) + 1 + xmeanN2)) / 2;
-EyeYAvg = ((ymeanN1+ymeanN2) / 2)*(7/5);
+EyeYAvg = ((ymeanN1+ymeanN2) / 2)*(6/5);
 
-targetSize = [426 362]; %minsta height och width
+targetSize = [400 300]; %minsta height och width
 
 rect = [EyeXAvg-targetSize(2)/2 EyeYAvg-targetSize(1)/2 targetSize(2) targetSize(1)];
 imcrop(mask, rect);
 
 %imshow(mask);
-
-
-
-
