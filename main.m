@@ -34,40 +34,11 @@ refImg = im2uint8(refImg);
 
 %Lightning Compensation
 %refImg = GrayWorld(refImg);
-refImg = WhitePatch(refImg);
 
-EyeMask = EyeDetection(refImg);
-MouthMask = MouthDetection(refImg);
-FaceMask = SkinColorDetection(refImg);
+croppedFace = DetectFace(refImg);
 
-mask = EyeMask.*FaceMask;
+imshow(croppedFace);
 
-%Localize the position of the mouth
-localizeMouthMask = MouthMask.*FaceMask;
-thresholdedMouth = imbinarize(localizeMouthMask, 0.5);
-[y,x] = find(thresholdedMouth);
-ymeanMouth = round(mean(y));
-
-%Crop the image according to the position of the eyes
-thresholded = imbinarize(mask(1 : (ymeanMouth-35), :),0.6);
-
-n1 = thresholded(:, 1 : round(end/2));
-n2 = thresholded(:, round(end/2+1) : end );
-
-[y,x] = find(n1);
-xmeanN1 = mean(x);
-ymeanN1 = mean(y);
-
-[y,x] = find(n2);
-xmeanN2 = mean(x);
-ymeanN2 = mean(y);
-
-EyeXAvg = (xmeanN1 + (width(n1) + 1 + xmeanN2)) / 2;
-EyeYAvg = ((ymeanN1+ymeanN2) / 2)*(6/5);
-
-targetSize = [400 300]; %minsta height och width
-
-rect = [EyeXAvg-targetSize(2)/2 EyeYAvg-targetSize(1)/2 targetSize(2) targetSize(1)];
-imcrop(mask, rect);
+%Construct_Eigenfaces();
 
 %imshow(mask);
