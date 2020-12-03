@@ -14,7 +14,7 @@ EyeMapC = (CbCr + CrNegative + Cb)/3;
 
 EyeMapC = histeq(EyeMapC);
 
-se_1 = strel('Disk', 1);
+se_1 = strel('Disk', 10);
 EyeMapL = imdilate(Y, se_1) ./ (imerode(Y, se_1) + 1);
 
 %Combinding the eyemaps
