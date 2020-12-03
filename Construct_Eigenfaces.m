@@ -4,7 +4,7 @@ function Construct_Eigenfaces()
     filePattern = fullfile(imgFolder, '*.jpg');
     imageFiles = dir(filePattern);
 
-    faceVectors = zeros(120701, 1);
+    faceVectors = zeros(108661, 1);
 
     for i = 1:length(imageFiles)
         currentFile = imgFolder + imageFiles(i).name;
@@ -17,8 +17,25 @@ function Construct_Eigenfaces()
     end
 
     meanFace = mean(faceVectors, 2);
+    %meanFace = reshape(meanFace, [361 301, 1]);
+    
+   %S4-5 Eigenfaces_Turk_91
+   %Phi = Gamma- Psi
+   meanFace = mean(meanFace,2);
+   phiFace = faceVector-meanFace;
 
-    meanFace = reshape(meanFace, [401 301, 1]);
+   %16 pga 16 bilder,ful men fungerande lösning
+   [eigenVector_v, ~] = eigs(phiFace.' * phiFace, 16);
 
-    imshow(meanFace)
+   %u = sum(v*phi) Eq(6)
+   eigenFaces = eigenVector_v * phiFace;
+
+   %omega = u*(Gamma- Tsi) Eq(7), omega describe contribution of each
+   %eigenface 
+   omegaT = eigenFaces.' * phiFace;
+
+   save('eigenfaces_database.mat', 'omegaT');
+   
+   meanFace = reshape(meanFace, [361 301, 1]);
+   imshow(meanFace);
 end

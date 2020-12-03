@@ -29,7 +29,7 @@ clear
 clc
 
 %Flyttade ut bilden f�r fick den inte att l�sa fr�n mappen (?!)
-refImg = imread('DB1/DB1/db1_02.jpg');
+refImg = imread('DB1/DB1/db1_08.jpg');
 refImg = im2uint8(refImg);
 
 %Lightning Compensation
@@ -39,6 +39,6 @@ croppedFace = DetectFace(refImg);
 
 imshow(croppedFace);
 
-%Construct_Eigenfaces();
+Construct_Eigenfaces();
 
 %imshow(mask);

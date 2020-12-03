@@ -26,10 +26,9 @@ function [faceImg] = DetectFace(refImg)
     EyeYAvg = ((Eye1y+Eye2y)/2)*(6/5);
     
     %Crop the image according to the position of the eyes
-    targetSize = [300 400]; %minsta height och width
+    targetSize = [300 360]; %minsta height och width
 
     rect = [round(EyeXAvg-targetSize(1)/2) round(EyeYAvg-targetSize(2)/2) targetSize(1) targetSize(2)];
     faceImg = imcrop(mask, rect);
-    imshow(refImg)
-    size(faceImg)
+    size(faceImg);
 end
