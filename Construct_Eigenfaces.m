@@ -16,26 +16,27 @@ function Construct_Eigenfaces()
         faceVectors(:, i) = faceVector;
     end
 
-    meanFace = mean(faceVectors, 2);
-    %meanFace = reshape(meanFace, [361 301, 1]);
+   meanOfFaces = mean(faceVectors, 2);
+   %meanFace = reshape(meanFace, [361 301, 1]);
     
    %S4-5 Eigenfaces_Turk_91
    %Phi = Gamma- Psi
-   meanFace = mean(meanFace,2);
-   phiFace = faceVector-meanFace;
-
-   %16 pga 16 bilder,ful men fungerande lösning
-   [eigenVector_v, ~] = eigs(phiFace.' * phiFace, 16);
-
-   %u = sum(v*phi) Eq(6)
-   eigenFaces = eigenVector_v * phiFace;
+   %meanOfFaces = mean(meanOfFaces,2);
+   phiFace = faceVectors(:,:)-meanOfFaces(:,:);
+   %16 pga 16 bilder,ful men fungerande lösning, eigenValue inte relevant
+   %för lösning
+   tmp = phiFace.' * phiFace;
+   [eigenVector_v, eigenValue] = eigs(tmp, 16);
+   
+   %u = sum(phi*v) Eq(6)
+   eigenFaces = phiFace * eigenVector_v;
 
    %omega = u*(Gamma- Tsi) Eq(7), omega describe contribution of each
-   %eigenface 
+   %eigenface
    omegaT = eigenFaces.' * phiFace;
-
-   save('eigenfaces_database.mat', 'omegaT');
+   meanOfFaces = reshape(meanOfFaces, [361 301, 1]);
+   save('eigenfaces_database.mat', 'omegaT','meanOfFaces','eigenFaces');
    
-   meanFace = reshape(meanFace, [361 301, 1]);
-   imshow(meanFace);
+   meanOfFaces = reshape(meanOfFaces, [361 301, 1]);
+  % imshow(meanOfFaces);
 end

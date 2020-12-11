@@ -29,7 +29,7 @@ clear
 clc
 
 %Flyttade ut bilden f�r fick den inte att l�sa fr�n mappen (?!)
-refImg = imread('DB1/DB1/db1_08.jpg');
+refImg = imread('DB1/DB1/db1_01.jpg');
 refImg = im2uint8(refImg);
 
 %Lightning Compensation
@@ -40,5 +40,45 @@ croppedFace = DetectFace(refImg);
 imshow(croppedFace);
 
 Construct_Eigenfaces();
+
+%Emil testar
+load ('eigenfaces_database.mat');
+
+%Ta fram ansiktet
+face = croppedFace;
+face = face - meanOfFaces;
+[width,height] = size(face);
+face = reshape(face, [width*height,1]);
+
+%Ta fram vikter med valt face
+omegaT2 = eigenFaces.'*face;
+
+%Equation 9 in Turk
+tmp2 = omegaT2-omegaT;
+tmp = sum(abs(tmp2));
+[error, number] = sort(tmp);
+bestMatchImage = number(1);
+smallestError = error(1);
+
+%Mathcing ID 
+threshold = 100000;
+if error < threshold
+    id = bestMatchImage;
+else
+    id = 0;
+end
+
+if(id < 10)
+i = int2str(id);
+imgName = strcat('DB1/DB1/db1_0', i, '.jpg');
+imshow(imgName);
+end
+
+if(id >= 10)
+i = int2str(id);
+imgName2 = strcat('DB1/DB1/db1_', i, '.jpg');
+imshow(imgName2);
+end
+
 
 %imshow(mask);
