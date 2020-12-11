@@ -23,4 +23,9 @@ se = strel('disk',12);
 binaryImg = imopen(binaryImg, se);
 binaryImg = imclose(binaryImg, se);
 
+binaryImg = imdilate(binaryImg, se);
+binaryImg = imdilate(binaryImg, se);
+binaryImg = imerode(binaryImg, se);
+binaryImg = imerode(binaryImg, se);
+
 end
