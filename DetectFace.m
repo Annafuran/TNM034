@@ -1,6 +1,6 @@
 function [faceImg] = DetectFace(refImg)
     
-    %refImg = imread('DB1/DB1/db1_04.jpg');
+    %refImg = imread('DB1/DB1/db1_11.jpg');
     refImg = WhitePatch(refImg);
 
     EyeMask = EyeDetection(refImg);
@@ -11,7 +11,8 @@ function [faceImg] = DetectFace(refImg)
 
     %Localize the position of the mouth
     localizeMouthMask = MouthMask.*FaceMask;
-    thresholdedMouth = imbinarize(localizeMouthMask, max(max(localizeMouthMask-0.01)));
+    [h, w] = size(localizeMouthMask);
+    thresholdedMouth = imbinarize(localizeMouthMask(:, round(0.4*w):round(0.6*w)), max(max(localizeMouthMask(:, round(0.4*w):round(0.6*w))-0.01)));
     [y,x] = find(thresholdedMouth);
     ymeanMouth = round(mean(y));
 
