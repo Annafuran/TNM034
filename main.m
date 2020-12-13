@@ -1,84 +1,49 @@
-%%%%
-%In the Matlab environment you will find many valuable functions that 
-%you may call in your program. Other program libraries are not allowed. 
-%You can use anynumber of functions in your file,but the format of the
-%calling function should adhere to the skeleton above.Our testing of 
-%your program will be done automatically in a batch run. Therefore your 
-%code should not include any pop-up windows or any other kind  of user 
-%interaction. Feel  free  to  divide  your  code  into  several  
-%different functions,and to store pre-computed properties of
-%known faces in .mat-files,which can be easily loaded when testing 
-%the program.
-%%%%
+%%SUPERful testlösning, ta bort denna sen
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-%function id = tnm034(im)
-%
-%im: Image of unknown face, RGB-image in uint8 format in the range [0, 255]
-%
-%id: The identity number (integer) of the indetified person, i.e. `1���,
-%`2���,..., `16��� for the persons belonging to `db1���and `0���for all other
-%faces. 
-%
-%Your program code. 
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+im =imread('DB1/DB1/db1_01.jpg');
+res = tnm034(im)
 
+im =imread('DB1/DB1/db1_02.jpg');
+res = tnm034(im)
 
-%%
-clear 
-clc
+im =imread('DB1/DB1/db1_03.jpg');
+res = tnm034(im)
 
-%Flyttade ut bilden f�r fick den inte att l�sa fr�n mappen (?!)
-refImg = imread('DB1/DB1/db1_01.jpg');
-refImg = im2uint8(refImg);
+im =imread('DB1/DB1/db1_04.jpg');
+res = tnm034(im)
 
-%Lightning Compensation
-%refImg = GrayWorld(refImg);
+im =imread('DB1/DB1/db1_05.jpg');
+res = tnm034(im)
 
-croppedFace = DetectFace(refImg);
+im =imread('DB1/DB1/db1_06.jpg');
+res = tnm034(im)
 
-imshow(croppedFace);
+im =imread('DB1/DB1/db1_07.jpg');
+res = tnm034(im)
 
-Construct_Eigenfaces();
+im =imread('DB1/DB1/db1_08.jpg');
+res = tnm034(im)
 
-%Emil testar
-load ('eigenfaces_database.mat');
+im =imread('DB1/DB1/db1_09.jpg');
+res = tnm034(im)
 
-%Ta fram ansiktet
-face = croppedFace;
-face = face - meanOfFaces;
-[width,height] = size(face);
-face = reshape(face, [width*height,1]);
+im =imread('DB1/DB1/db1_10.jpg');
+res = tnm034(im)
 
-%Ta fram vikter med valt face
-omegaT2 = eigenFaces.'*face;
+im =imread('DB1/DB1/db1_11.jpg');
+res = tnm034(im)
 
-%Equation 9 in Turk
-tmp2 = omegaT2-omegaT;
-tmp = sum(abs(tmp2));
-[error, number] = sort(tmp);
-bestMatchImage = number(1);
-smallestError = error(1);
+im =imread('DB1/DB1/db1_12.jpg');
+res = tnm034(im)
 
-%Mathcing ID 
-threshold = 100000;
-if error < threshold
-    id = bestMatchImage;
-else
-    id = 0;
-end
+im =imread('DB1/DB1/db1_13.jpg');
+res = tnm034(im)
 
-if(id < 10)
-i = int2str(id);
-imgName = strcat('DB1/DB1/db1_0', i, '.jpg');
-imshow(imgName);
-end
+im =imread('DB1/DB1/db1_14.jpg');
+res = tnm034(im)
 
-if(id >= 10)
-i = int2str(id);
-imgName2 = strcat('DB1/DB1/db1_', i, '.jpg');
-imshow(imgName2);
-end
+im =imread('DB1/DB1/db1_15.jpg');
+res = tnm034(im)
 
-
-%imshow(mask);
+im =imread('DB1/DB1/db1_16.jpg');
+res = tnm034(im)

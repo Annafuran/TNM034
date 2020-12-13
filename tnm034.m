@@ -25,41 +25,30 @@
 
 
 %%
-%function id = tnm034(im)
-    clear 
-    clc
+function id = tnm034(im)
 
     %Flyttade ut bilden f�r fick den inte att l�sa fr�n mappen (?!)
-    im = 'DB1/DB1/db1_14.jpg';
-    refImg = imread(im);
-    refImg = double(refImg);
+    %im = 'DB1/DB1/db1_01.jpg';
+    %refImg = imread(im);
 
     %Test stability
-    %%refImg = imrotate(refImg, 5);
-    refImg = imresize(refImg, 1.1);
-    %refImg = refImg*1.3;
-
-    %Lightning Compensation
-    %refImg = GrayWorld(refImg);
+    refImg = im;
+    %refImg = imrotate(im, 5);
+    %1.1 funkar ej för bild 10, 0.9 funkar ej för bild 16
+    %refImg = imresize(im, 1.1); 
+    refImg = im*1.3;
 
     croppedFace = DetectFace(refImg);
-
-    %imshow(croppedFace);
-
     Construct_Eigenfaces();
-
-    %Emil testar
-    load ('eigenfaces_database.mat');
-
+    load ('eigenfacesDatabase.mat');
+    
     %Ta fram ansiktet
     face = im2double(croppedFace);
-   % [width,height] = size(face);
-   % face = reshape(face, [width*height,1]);
-    %face = mean(face, 2);
-    face2 = face(:);
-    face = face2 - meanOfFaces;
+    vectorFace = face(:);
+    face = vectorFace - meanOfFaces;
 
     %Ta fram vikter med valt face
+    omegaT = eigenFaces.' * phiFace;
     omegaT2 = eigenFaces.'*face;
 
     %Equation 9 in Turk
@@ -91,7 +80,4 @@
         imshow(imgName2);
     end
 
-%end
-
-
-%imshow(mask);
+end

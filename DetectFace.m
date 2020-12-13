@@ -1,12 +1,11 @@
 function [faceImg] = DetectFace(refImg)
     
-    %refImg = imread('DB1/DB1/db1_13.jpg');
-    refImg = GrayWorld(refImg);
+    %refImg = imread('DB1/DB1/db1_01.jpg');
     
     %Normalize Pixel values in image
     refImg = double(refImg)./double(max(max(refImg)));
     refImg = im2uint8(refImg);
-    
+   
     FaceMask = SkinColorDetection(refImg);
     EyeMask = EyeDetection(refImg);
     MouthMask = MouthDetection(refImg);
@@ -30,10 +29,18 @@ function [faceImg] = DetectFace(refImg)
     EyeXAvg = (Eye1x+Eye2x)/2;
     EyeYAvg = ((Eye1y+Eye2y)/2)*(6/5);
     
+    eyeDist = abs(Eye1x-Eye2x);
+    factor = 127/ eyeDist;
+    refImg = imresize(refImg,factor);
+   
     %Crop the image according to the position of the eyes
     targetSize = [300 360]; %minsta height och width
 
-    rect = [round(EyeXAvg-targetSize(1)/2) round(EyeYAvg-targetSize(2)/2) targetSize(1) targetSize(2)];
+    rect = [round(EyeXAvg*factor-targetSize(1)/2) round(EyeYAvg*factor-targetSize(2)/2) targetSize(1) targetSize(2)];
     faceImg = imcrop(refImg, rect);
     size(faceImg);
+    
+    faceImg = GrayWorld(faceImg);
+    
+  %  imshow(faceImg)
 end

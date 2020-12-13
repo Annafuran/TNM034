@@ -10,34 +10,21 @@ function Construct_Eigenfaces()
         currentFile = imgFolder + imageFiles(i).name;
         currentImage = imread(currentFile);
         currentImage = DetectFace(currentImage);
-        %[rows, columns] = size(currentImage);
-        %faceVector = double(reshape(currentImage, [rows*columns, 1]));
-        
         currentImage =im2double(currentImage);
         faceVectors(:, i) = currentImage(:);
     end
 
    %Ett medelvärde för alla bilder
-   meanOfFaces = mean(faceVectors, 2);
-   %meanFace = reshape(meanFace, [361 301, 1]);
+   meanOfFaces = sum(faceVectors,2)./(length(imageFiles));
     
    %S4-5 Eigenfaces_Turk_91
    %Phi = Gamma- Psi
-   %meanOfFaces = mean(meanOfFaces,2);
-   phiFace = faceVectors(:,:)-meanOfFaces;
-   %16 pga 16 bilder,ful men fungerande lösning, eigenValue inte relevant
-   %för lösning
+   phiFace = faceVectors(:,:)-meanOfFaces(:,:);
    tmp = phiFace.' * phiFace;
-   [eigenVector_v, eigenValue] = eigs(tmp, 16);
-   
+   [eigenVector_v, eigenValue] = eigs(tmp, length(imageFiles));
+  
    %u = sum(phi*v) Eq(6)
    eigenFaces = phiFace * eigenVector_v;
-
-   %omega = u*(Gamma- Tsi) Eq(7), omega describe contribution of each
-   %eigenface
-   omegaT = eigenFaces.' * phiFace;
-   save('eigenfaces_database.mat', 'omegaT','meanOfFaces','eigenFaces');
    
-    meanOfFaces = reshape(meanOfFaces, [361 301, 3]);
-  % imshow(meanOfFaces)
+   save('eigenfacesDatabase.mat', 'phiFace','meanOfFaces','eigenFaces');
 end

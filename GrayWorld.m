@@ -14,10 +14,6 @@ function [I] = GrayWorld(im)
     I(:, :, 1) = alpha*I(:, :, 1);
     I(:, :, 3) = beta*I(:, :, 3);
     
-    %figure;
-    %subplot(1,2,1);
-    %imshow(orig);
-    %subplot(1,2,2);
     %imshow(I);
    
 end

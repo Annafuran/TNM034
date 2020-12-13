@@ -21,7 +21,6 @@ theta = sign*(atan2(deltaY,deltaX));
 %Get the angle theta in degrees
 thetaDegrees = theta*180/pi;
 inputImg = imrotate(inputImg,thetaDegrees);
-%inputImg = imtranslate(inputImg, [25.3, -10.1]);
 rotatedFace = inputImg;
 
 end
