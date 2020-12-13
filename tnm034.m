@@ -26,18 +26,18 @@
 
 %%
 %function id = tnm034(im)
-    %clear 
-    %clc
+    clear 
+    clc
 
     %Flyttade ut bilden f�r fick den inte att l�sa fr�n mappen (?!)
-    im = 'DB1/DB1/db1_01.jpg';
+    im = 'DB1/DB1/db1_14.jpg';
     refImg = imread(im);
-    refImg = im2uint8(refImg);
+    refImg = double(refImg);
 
     %Test stability
-    %refImg = imrotate(refImg, 5);
-    %refImg = imresize(refImg, 1.1);
-    %refImg = refImg*0.7;
+    %%refImg = imrotate(refImg, 5);
+    refImg = imresize(refImg, 1.1);
+    %refImg = refImg*1.3;
 
     %Lightning Compensation
     %refImg = GrayWorld(refImg);

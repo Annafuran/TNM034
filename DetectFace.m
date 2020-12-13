@@ -1,7 +1,8 @@
 function [faceImg] = DetectFace(refImg)
     
-    %refImg = imread('DB1/DB1/db1_11.jpg');
+    %refImg = imread('DB1/DB1/db1_13.jpg');
     refImg = GrayWorld(refImg);
+    
     %Normalize Pixel values in image
     refImg = double(refImg)./double(max(max(refImg)));
     refImg = im2uint8(refImg);
