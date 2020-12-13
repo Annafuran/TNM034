@@ -1,12 +1,14 @@
 function [faceImg] = DetectFace(refImg)
     
     %refImg = imread('DB1/DB1/db1_11.jpg');
-    refImg = WhitePatch(refImg);
-
+    refImg = GrayWorld(refImg);
+    %Normalize Pixel values in image
+    refImg = double(refImg)./double(max(max(refImg)));
+    refImg = im2uint8(refImg);
+    
+    FaceMask = SkinColorDetection(refImg);
     EyeMask = EyeDetection(refImg);
     MouthMask = MouthDetection(refImg);
-    FaceMask = SkinColorDetection(refImg);
-    
     mask = EyeMask.*FaceMask;
 
     %Localize the position of the mouth
@@ -20,6 +22,7 @@ function [faceImg] = DetectFace(refImg)
     [Eye1x, Eye1y, Eye2x, Eye2y] = LocalizeEyes(mask, ymeanMouth);
     
     %Rotate the image to align the y-position of the eyes
+    refImg = RotateFace(refImg, Eye1x, Eye1y, Eye2x, Eye2y);
     mask = RotateFace(mask, Eye1x, Eye1y, Eye2x, Eye2y);
     [Eye1x, Eye1y, Eye2x, Eye2y] = LocalizeEyes(mask, ymeanMouth);
 
@@ -30,6 +33,6 @@ function [faceImg] = DetectFace(refImg)
     targetSize = [300 360]; %minsta height och width
 
     rect = [round(EyeXAvg-targetSize(1)/2) round(EyeYAvg-targetSize(2)/2) targetSize(1) targetSize(2)];
-    faceImg = imcrop(mask, rect);
+    faceImg = imcrop(refImg, rect);
     size(faceImg);
 end

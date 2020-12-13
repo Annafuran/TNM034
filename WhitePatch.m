@@ -18,7 +18,7 @@ function [I] = WhitePatch(im)
     B = B.*beta;
     
     I = cat(3,R,G,B);
-   
+      
 end
 
 

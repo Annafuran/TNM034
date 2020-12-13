@@ -25,28 +25,26 @@
 
 
 %%
-function id = tnm034(im)
+%function id = tnm034(im)
     %clear 
     %clc
 
     %Flyttade ut bilden f�r fick den inte att l�sa fr�n mappen (?!)
-    %refImg = imread('DB1/DB1/db1_13.jpg');
-    im = 'DB1/DB1/db1_05.jpg';
+    im = 'DB1/DB1/db1_01.jpg';
     refImg = imread(im);
     refImg = im2uint8(refImg);
 
     %Test stability
-    refImg = imrotate(refImg, 5);
-    
+    %refImg = imrotate(refImg, 5);
+    %refImg = imresize(refImg, 1.1);
+    %refImg = refImg*0.7;
 
     %Lightning Compensation
     %refImg = GrayWorld(refImg);
 
     croppedFace = DetectFace(refImg);
 
-    imshow(croppedFace);
-
-
+    %imshow(croppedFace);
 
     Construct_Eigenfaces();
 
@@ -54,10 +52,12 @@ function id = tnm034(im)
     load ('eigenfaces_database.mat');
 
     %Ta fram ansiktet
-    face = croppedFace;
-    face = face - meanOfFaces;
-    [width,height] = size(face);
-    face = reshape(face, [width*height,1]);
+    face = im2double(croppedFace);
+   % [width,height] = size(face);
+   % face = reshape(face, [width*height,1]);
+    %face = mean(face, 2);
+    face2 = face(:);
+    face = face2 - meanOfFaces;
 
     %Ta fram vikter med valt face
     omegaT2 = eigenFaces.'*face;
@@ -70,7 +70,7 @@ function id = tnm034(im)
     smallestError = error(1);
 
     %Mathcing ID 
-    threshold = 1700;
+    threshold = 15000;
     if smallestError < threshold
         id = bestMatchImage;
     else
@@ -91,7 +91,7 @@ function id = tnm034(im)
         imshow(imgName2);
     end
 
-end
+%end
 
 
 %imshow(mask);
