@@ -5,6 +5,7 @@ function [faceImg] = DetectFace(refImg)
     %Normalize Pixel values in image
     refImg = double(refImg)./double(max(max(refImg)));
     refImg = im2uint8(refImg);
+    
    
     FaceMask = SkinColorDetection(refImg);
     EyeMask = EyeDetection(refImg);
@@ -29,8 +30,9 @@ function [faceImg] = DetectFace(refImg)
     EyeXAvg = (Eye1x+Eye2x)/2;
     EyeYAvg = ((Eye1y+Eye2y)/2)*(6/5);
     
+    %Change size according to arbitrary eye distance
     eyeDist = abs(Eye1x-Eye2x);
-    factor = 127/ eyeDist;
+    factor = 142/eyeDist;
     refImg = imresize(refImg,factor);
    
     %Crop the image according to the position of the eyes

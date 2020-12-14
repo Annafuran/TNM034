@@ -28,17 +28,19 @@
 function id = tnm034(im)
 
     %Flyttade ut bilden f�r fick den inte att l�sa fr�n mappen (?!)
-    %im = 'DB1/DB1/db1_01.jpg';
-    %refImg = imread(im);
+   % im = 'DB1/DB1/db1_01.jpg';
+   % refImg = im2double(imread(im));
+
 
     %Test stability
-    refImg = im;
-    %refImg = imrotate(im, 5);
-    %1.1 funkar ej för bild 10, 0.9 funkar ej för bild 16
-    %refImg = imresize(im, 1.1); 
-    refImg = im*1.3;
 
-    croppedFace = DetectFace(refImg);
+    %im = imrotate(im, 5);
+    %1.1 funkar ej för bild 10, 0.9 funkar ej för bild 16
+    im = imresize(im, 1.1); 
+    im = im2double(im);
+    %im = im * 1.3;
+    
+    croppedFace = DetectFace(im);
     Construct_Eigenfaces();
     load ('eigenfacesDatabase.mat');
     
@@ -59,7 +61,7 @@ function id = tnm034(im)
     smallestError = error(1);
 
     %Mathcing ID 
-    threshold = 15000;
+    threshold = 12800;
     if smallestError < threshold
         id = bestMatchImage;
     else
@@ -79,5 +81,4 @@ function id = tnm034(im)
         imgName2 = strcat('DB1/DB1/db1_', i, '.jpg');
         imshow(imgName2);
     end
-
 end

@@ -10,7 +10,7 @@ function Construct_Eigenfaces()
         currentFile = imgFolder + imageFiles(i).name;
         currentImage = imread(currentFile);
         currentImage = DetectFace(currentImage);
-        currentImage =im2double(currentImage);
+        currentImage = im2double(currentImage);
         faceVectors(:, i) = currentImage(:);
     end
 
@@ -21,8 +21,8 @@ function Construct_Eigenfaces()
    %Phi = Gamma- Psi
    phiFace = faceVectors(:,:)-meanOfFaces(:,:);
    tmp = phiFace.' * phiFace;
-   [eigenVector_v, eigenValue] = eigs(tmp, length(imageFiles));
-  
+   [eigenVector_v, eigenValue] = eigs(tmp, length(imageFiles)); %#ok<ASGLU>
+   
    %u = sum(phi*v) Eq(6)
    eigenFaces = phiFace * eigenVector_v;
    

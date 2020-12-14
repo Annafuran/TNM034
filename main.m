@@ -27,7 +27,8 @@ res = tnm034(im)
 im =imread('DB1/DB1/db1_09.jpg');
 res = tnm034(im)
 
-im =imread('DB1/DB1/db1_10.jpg');
+im = imread('DB1/DB1/db1_10.jpg');
+%im = imresize(im, 1.1);
 res = tnm034(im)
 
 im =imread('DB1/DB1/db1_11.jpg');
@@ -46,4 +47,5 @@ im =imread('DB1/DB1/db1_15.jpg');
 res = tnm034(im)
 
 im =imread('DB1/DB1/db1_16.jpg');
+%im = imresize(im, 0.8);
 res = tnm034(im)
