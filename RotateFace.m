@@ -20,6 +20,16 @@ end
 theta = sign*(atan2(deltaY,deltaX));
 %Get the angle theta in degrees
 thetaDegrees = theta*180/pi;
+
+%Hjälper för +5 grader
+if thetaDegrees > 5
+    thetaDegrees = 5;
+end
+
+if thetaDegrees < -5
+   thetaDegrees = -5;
+end
+
 inputImg = imrotate(inputImg,thetaDegrees);
 rotatedFace = inputImg;
 

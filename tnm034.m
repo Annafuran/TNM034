@@ -64,10 +64,10 @@ function id = tnm034(im)
 
     %Mathcing ID 
     threshold = 9300;
+    id = 0;
+    
     if smallestError < threshold
         id = bestMatchImage;
-    else
-        id = 0;
     end
 
     if (id == 0)
@@ -76,11 +76,9 @@ function id = tnm034(im)
     elseif(id < 10)
         i = int2str(id);
         imgName = strcat('DB1/DB1/db1_0', i, '.jpg');
-        imshow(imgName);
 
     elseif(id >= 10)
         i = int2str(id);
         imgName2 = strcat('DB1/DB1/db1_', i, '.jpg');
-        imshow(imgName2);
     end
 end

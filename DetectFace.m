@@ -1,6 +1,6 @@
 function [faceImg] = DetectFace(refImg)
     
-    %refImg = imread('DB1/DB1/db1_09.jpg');
+    %refImg = imread('DB1/DB1/db1_04.jpg');
     %refImg = imrotate(refImg, 5);
     %Normalize Pixel values in image
     %refImg = double(refImg)./double(max(max(refImg)));
@@ -36,7 +36,7 @@ function [faceImg] = DetectFace(refImg)
     
     %Change size according to arbitrary eye distance
     eyeDist = abs(Eye1x-Eye2x);
-    factor = 142/eyeDist;
+    factor = 138/eyeDist;
     refImg = imresize(refImg,factor);
    
     %Crop the image according to the position of the eyes

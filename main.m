@@ -16,12 +16,12 @@ for i = 1:16
     %Testing changes in rotation
     %Does not work for image 9 if rotating +5 degrees
     %Does not work for image 4 if rotating -5 degrees
-    %image = imrotate(image, -5);
+    image = imrotate(image, 5);
     
     %Testing changes in scaling
     %Does not work for image 16 if scale = 0.9
     %Does not work for image 4, 8, 10, 16 if scale = 1.1
-    %image = imresize(image, 1.1);
+    %image = imresize(image, 0.9);
     
     res = tnm034(image)
     
