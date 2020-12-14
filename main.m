@@ -1,51 +1,33 @@
-%%SUPERful testlösning, ta bort denna sen
 
-im =imread('DB1/DB1/db1_01.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_02.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_03.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_04.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_05.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_06.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_07.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_08.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_09.jpg');
-res = tnm034(im)
-
-im = imread('DB1/DB1/db1_10.jpg');
-%im = imresize(im, 1.1);
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_11.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_12.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_13.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_14.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_15.jpg');
-res = tnm034(im)
-
-im =imread('DB1/DB1/db1_16.jpg');
-%im = imresize(im, 0.8);
-res = tnm034(im)
+for i = 1:16
+    imgNo = int2str(i);
+    if i < 10
+        imStr = strcat('DB1/DB1/db1_0', imgNo, '.jpg');
+    else
+        imStr = strcat('DB1/DB1/db1_', imgNo, '.jpg');
+    end
+    %imStr = 'DB0/DB0/db0_4.jpg';
+    image = imread(imStr);
+    
+    %Testing changes in light intensity
+    %image = im2double(image);
+    %image = 0.7*image;
+    
+    %Testing changes in rotation
+    %Does not work for image 9 if rotating +5 degrees
+    %Does not work for image 4 if rotating -5 degrees
+    %image = imrotate(image, -5);
+    
+    %Testing changes in scaling
+    %Does not work for image 16 if scale = 0.9
+    %Does not work for image 4, 8, 10, 16 if scale = 1.1
+    %image = imresize(image, 1.1);
+    
+    res = tnm034(image)
+    
+    if res ~= i
+        number = num2str(i);
+        msg = strcat('Threshold too large for image ', number, '!'); 
+        disp(msg);
+    end
+end

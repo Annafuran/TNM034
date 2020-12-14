@@ -1,9 +1,13 @@
 function [faceImg] = DetectFace(refImg)
     
-    %refImg = imread('DB1/DB1/db1_01.jpg');
-    
+    %refImg = imread('DB1/DB1/db1_09.jpg');
+    %refImg = imrotate(refImg, 5);
     %Normalize Pixel values in image
-    refImg = double(refImg)./double(max(max(refImg)));
+    %refImg = double(refImg)./double(max(max(refImg)));
+    %refImg = im2uint8(refImg);
+    
+    refImg = im2double(refImg);
+    refImg = (refImg-min(refImg(:)))/(max(refImg(:))-min(refImg(:)));
     refImg = im2uint8(refImg);
     
    
