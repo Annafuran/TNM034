@@ -27,31 +27,16 @@
 %%
 function id = tnm034(im)
 
-    %Flyttade ut bilden f�r fick den inte att l�sa fr�n mappen (?!)
-    %im = 'DB1/DB1/db1_09.jpg';
-    %im = imread(im);
-
-
-    %Test stability
-
-    %im = imrotate(im, 5);
-    %1.1 funkar ej för bild 10, 0.9 funkar ej för bild 16
-    %im = imresize(im, 0.9); 
-    %im = im2double(im);
-    %im = 1.3*im;
-    %im = im2uint8(im);
-    %im = im * 1.3;
-    
     croppedFace = DetectFace(im);
     %Construct_Eigenfaces();
     load ('eigenfacesDatabase.mat');
     
-    %Ta fram ansiktet
+    %Find the face
     face = im2double(croppedFace);
     vectorFace = face(:);
     face = vectorFace - meanOfFaces;
 
-    %Ta fram vikter med valt face
+    %Find weights of the current face
     omegaT = eigenFaces.' * phiFace;
     omegaT2 = eigenFaces.'*face;
 
@@ -62,8 +47,8 @@ function id = tnm034(im)
     bestMatchImage = number(1);
     smallestError = error(1);
 
-    %Mathcing ID 
-    threshold = 9300;
+    %Matching ID 
+    threshold = 9500;
     id = 0;
     
     if smallestError < threshold

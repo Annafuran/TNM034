@@ -1,20 +1,14 @@
-function [faceImg] = DetectFace(refImg)
-    
-    %refImg = imread('DB1/DB1/db1_04.jpg');
-    %refImg = imrotate(refImg, 5);
-    %Normalize Pixel values in image
-    %refImg = double(refImg)./double(max(max(refImg)));
-    %refImg = im2uint8(refImg);
-    
+function [faceImg] = DetectFace(refImg)    
     refImg = im2double(refImg);
     refImg = (refImg-min(refImg(:)))/(max(refImg(:))-min(refImg(:)));
     refImg = im2uint8(refImg);
     
-   
     FaceMask = SkinColorDetection(refImg);
     EyeMask = EyeDetection(refImg);
     MouthMask = MouthDetection(refImg);
-    mask = EyeMask.*FaceMask;
+    
+    
+    refImg = GrayWorld(refImg);
 
     %Localize the position of the mouth
     localizeMouthMask = MouthMask.*FaceMask;
@@ -24,29 +18,25 @@ function [faceImg] = DetectFace(refImg)
     ymeanMouth = round(mean(y));
 
     %Localize the position of the eyes
-    [Eye1x, Eye1y, Eye2x, Eye2y] = LocalizeEyes(mask, ymeanMouth);
+    localizeEyeMask = EyeMask.*FaceMask;
+    [Eye1x, Eye1y, Eye2x, Eye2y] = LocalizeEyes(localizeEyeMask, ymeanMouth);
     
     %Rotate the image to align the y-position of the eyes
     refImg = RotateFace(refImg, Eye1x, Eye1y, Eye2x, Eye2y);
-    mask = RotateFace(mask, Eye1x, Eye1y, Eye2x, Eye2y);
-    [Eye1x, Eye1y, Eye2x, Eye2y] = LocalizeEyes(mask, ymeanMouth);
+    localizeEyeMask = RotateFace(localizeEyeMask, Eye1x, Eye1y, Eye2x, Eye2y);
+    [Eye1x, Eye1y, Eye2x, Eye2y] = LocalizeEyes(localizeEyeMask, ymeanMouth);
 
     EyeXAvg = (Eye1x+Eye2x)/2;
     EyeYAvg = ((Eye1y+Eye2y)/2)*(6/5);
     
     %Change size according to arbitrary eye distance
     eyeDist = abs(Eye1x-Eye2x);
-    factor = 138/eyeDist;
+    factor = 140/eyeDist;
     refImg = imresize(refImg,factor);
    
     %Crop the image according to the position of the eyes
     targetSize = [300 360]; %minsta height och width
-
     rect = [round(EyeXAvg*factor-targetSize(1)/2) round(EyeYAvg*factor-targetSize(2)/2) targetSize(1) targetSize(2)];
     faceImg = imcrop(refImg, rect);
     size(faceImg);
-    
-    faceImg = GrayWorld(faceImg);
-    
-  %  imshow(faceImg)
 end

@@ -27,6 +27,4 @@ EyeDetectedImg = imdilate(EyeDetectedImg, se_2);
 %Normalizing
 EyeDetectedImg = (EyeDetectedImg./max(EyeDetectedImg(:)));
 
-%imshow(EyeDetectedImg);
-
 end

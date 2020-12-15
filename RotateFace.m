@@ -11,7 +11,7 @@ else
     eyeLy = eye1y;
 end
 
-%Rotera medurs om eye1y är större än eye2y, annars rotera moturs
+%Rotate clockwise if eye1y is bigger than eye2y, otherwise opposite
 sign = 1;
 if(eyeLy > eyeRy)
     sign = -1;
@@ -20,15 +20,6 @@ end
 theta = sign*(atan2(deltaY,deltaX));
 %Get the angle theta in degrees
 thetaDegrees = theta*180/pi;
-
-%Hjälper för +5 grader
-if thetaDegrees > 5
-    thetaDegrees = 5;
-end
-
-if thetaDegrees < -5
-   thetaDegrees = -5;
-end
 
 inputImg = imrotate(inputImg,thetaDegrees);
 rotatedFace = inputImg;

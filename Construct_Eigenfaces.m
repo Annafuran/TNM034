@@ -1,5 +1,5 @@
 function Construct_Eigenfaces()
-
+    %Construct Eigenfaces from DB1
     imgFolder = "DB1/DB1/";
     filePattern = fullfile(imgFolder, '*.jpg');
     imageFiles = dir(filePattern);
@@ -18,7 +18,6 @@ function Construct_Eigenfaces()
    meanOfFaces = sum(faceVectors,2)./(length(imageFiles));
     
    %S4-5 Eigenfaces_Turk_91
-   %Phi = Gamma- Psi
    phiFace = faceVectors(:,:)-meanOfFaces(:,:);
    tmp = phiFace.' * phiFace;
    [eigenVector_v, eigenValue] = eigs(tmp, length(imageFiles)); %#ok<ASGLU>
